@@ -34,12 +34,21 @@ class Episode(object):
         """
         qvals = []
 
-        # TODO:
         #  Calculate the q(s,a) value of each state in the episode.
         #  Try to implement it in O(n) runtime, where n is the number of
         #  states. Hint: change the order.
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        idx = len(self.experiences) - 1
+        qval = 0
+
+        # O(n)
+        while idx > 0:
+            qval = self.experiences[idx].reward + (qval * gamma)
+            qvals.append(qval)
+
+        # list reverse: O(1) if changing of a bit, worst case O(n)
+        qvals = qvals.reverse()
+
         # ========================
         return qvals
 
@@ -83,12 +92,24 @@ class TrainBatch(object):
         """
         train_batch = None
 
-        # TODO:
         #   - Extract states, actions and total rewards from episodes.
         #   - Calculate the q-values for states in each experience.
         #   - Construct a TrainBatch instance.
         # ====== YOUR CODE: ======
-        raise NotImplementedError()
+        rewards, actions, states, qvals = [], [], [], []
+
+        for episode in episodes:
+            qvals += episode.calc_qvals(gamma)
+            rewards += episode.total_reward
+
+            for experiences in episode.experiences:
+                states += experiences.state
+                actions += experiences.action
+
+        train_batch = TrainBatch(torch.stack(states),
+                                 torch.LongTensor(actions),
+                                 torch.FloatTensor(qvals),
+                                 torch.FloatTensor(rewards))
         # ========================
         return train_batch
 
@@ -141,13 +162,22 @@ class TrainBatchDataset(torch.utils.data.IterableDataset):
         agent.reset()
 
         while True:
-            # TODO:
             #  - Play the environment with the agent until an episode ends.
             #  - Construct an Episode object based on the experiences generated
             #    by the agent.
             #  - Store Episodes in the curr_batch list.
             # ====== YOUR CODE: ======
-            raise NotImplementedError()
+            experience = agent.step()
+            episode_reward = experience.reward
+            episode_experiences += experience
+
+            while not experience.is_done:
+                experience = agent.step()
+                episode_reward = episode_reward + experience.reward
+                episode_experiences = episode_experiences + experience
+
+            episode = Episode(episode_reward, episode_experiences)
+            curr_batch.append(episode)
             # ========================
             if len(curr_batch) == self.episode_batch_size:
                 yield tuple(curr_batch)

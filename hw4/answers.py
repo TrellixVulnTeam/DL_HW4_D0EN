@@ -91,13 +91,17 @@ def part2_vae_hyperparams():
     hypers = dict(
         batch_size=0, h_dim=0, z_dim=0, x_sigma2=0, learn_rate=0.0, betas=(0.0, 0.0),
     )
-    # TODO: Tweak the hyperparameters to generate a former president.
+    # Tweak the hyperparameters to generate a former president.
     # ====== YOUR CODE: ======
-    raise NotImplementedError()
+    hypers['batch_size'] = 64
+    hypers['z_dim'] = hypers['h_dim'] = 256
+    hypers['betas'] = (0.95, 0.95)
+    hypers['x_sigma2'] = 0.00084
+    hypers['learn_rate'] = 0.00186
     # ========================
     return hypers
 
-
+# TODO: fill answers
 part2_q1 = r"""
 **Your answer:**
 
@@ -231,5 +235,6 @@ An equation: $e^{i\pi} -1 = 0$
 
 def part4_affine_backward(ctx, grad_output):
     # ====== YOUR CODE: ======
+    # TODO: implement
     raise NotImplementedError()
     # ========================

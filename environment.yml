@@ -27,7 +27,7 @@ dependencies:
     - gym[atari, accept-rom-license, box2d]
   # pytorch
   - pytorch=1.10
-  # cudatoolkit
+  - cudatoolkit
   - torchvision
   - torchtext
 

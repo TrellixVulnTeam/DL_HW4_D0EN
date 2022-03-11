@@ -19,6 +19,7 @@ from .rl_data import Episode, Experience, TrainBatch
 class PolicyNet(nn.Module):
     def __init__(self, in_features: int, out_actions: int, **kw):
         """
+        # TODO: Tweak values?
         Create a model which represents the agent's policy.
         :param in_features: Number of input features (in one observation).
         :param out_actions: Number of output actions.
@@ -34,7 +35,7 @@ class PolicyNet(nn.Module):
             layers = kw[layers]
 
         if kw[nns]:
-            layers = kw[nns]
+            nns = kw[nns]
 
         linear_layers = (nn.Linear(in_features, layers[0]), nn.Linear(layers[0], layers[1]),
                          nn.Linear(layers[1], out_actions))
@@ -443,6 +444,7 @@ class PolicyTrainer(object):
         # ====== YOUR CODE: ======
         self.optimizer.zero_grad()
         idx = 0
+
         while idx < len(self.loss_functions):
             loss, loss_dict = self.loss_functions[idx](batch, self.model(batch.states))
             losses_dict.update(loss_dict)

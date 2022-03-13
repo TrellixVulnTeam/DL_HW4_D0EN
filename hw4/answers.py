@@ -17,6 +17,10 @@ def part1_pg_hyperparams():
     # TODO: Tweak the hyperparameters if needed. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #  You can also add new ones if you need them for your model's __init__.
     # ====== YOUR CODE: ======
+    hp = dict(
+        batch_size=32, gamma=0.975, beta=0.5, learn_rate=1e-3, eps=1e-8,
+        num_workers=0,
+    )
     # ========================
     return hp
 
@@ -34,6 +38,15 @@ def part1_aac_hyperparams():
     # TODO: Tweak the hyperparameters.  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #  You can also add new ones if you need them for your model implementation.
     # ====== YOUR CODE: ======
+    hp = dict(
+        batch_size=16,
+        gamma=0.975,
+        beta=0.45,
+        delta=0.65,
+        learn_rate=2e-3,
+        eps=1e-8,
+        num_workers=0,
+    )
     # ========================
     return hp
 

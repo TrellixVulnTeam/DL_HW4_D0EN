@@ -62,33 +62,30 @@ by its q value, but also by how much it can improve the state values. This valid
 
 part1_q3 = r"""
                                     **1**
-TODO: CHANGEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                    
                                 <loss_p>
-'epg' and 'vpg' begin with a negative policy loss of around 
--90 which rises towards 0+ as the episodes progress, as these methods do not 
-use the baseline reduction. The other methods, 'bpg' and 'cpg' do use 
-baseline reduction which is why the graph shows subtle changes around 0 in 
-the policy loss, which is a direct affect of reducing the baseline.
+Negative loss of epg and vpg start at -90 and increases up to 0 during the episodes. No baseline reduction used.
+For bpg and 'cpg' we can see changes around 0 in the loss, due to the use of baseline reduction.
 
 
                                 <baseline>
-Only 'bpg' and 'cpg' use baseline reduction which is why 
+The graphs contain the only methods that use baseline reduction: cpg and bpg.
 the other methods are not in this graph. Both methods begin with a baseline 
-of around -60 which rises towards $10$ as the episodes progress. Bigger 
+of around -60 which rises towards 10 as the episodes progress. Bigger 
 baseline values assist the network in increasing the reward.
 
 
                                 <loss_e>
-Since only 'epg' and 'cpg' use entropy loss, the other models 
-are not in this graph. Both the 'epg' and 'cpg' begin with a negative entropy 
-loss of around -0.5 which rises towards zero as the episodes progress. A 
-higher absolute value here indicates that the probability distribution is 
-close to a uniform one, while a lower absolute value indicates convergence of 
-the network to a better policy. In 'cpg' there is a baseline subtraction 
-which causes a faster convergence than in 'epg', which is why 'cpg' is a 
-better choice here. 
+The epg and cpg models start at -0.5 entropy, which goes up to 0 as we run the episodes. A uniform
+probability distribution is more likely here the higher absolute values we get. 
+On the other hand, lower absolute values tend to point to a convergence of our network to an improved
+policy. 
+
+We can see that the best choice is cpg since we use baseline subtraction in it, which makes the model converge faster
+then epg.
+
+Note that the graphs only shows the models that use entropy loss, the other models 
+are not in this graph.
 
 
                                 <mean_reward>
@@ -103,29 +100,23 @@ rise a lot faster and higher than those which don't use a baseline.
                                     **2**
 
                                 <loss_p>
-Although starting with the same policy loss, 'aac' rises a 
-lot more quickly than 'vpg' and 'epg', resulting in a lower trajectory loss. 
-Therefore 'aac' is much better than both 'vpg' and 'epg' in terms of policy 
-loss as and thus can get a better approximation of the state value.
+aac is better than vpg and epg and so it will approximate the state value better then other two.
+
+This is inferred from the fact that all models start with a similar policy loss, but aac surpasses vpg 
+and epg quickly, which means it has a lower trajectory loss.
 
                                 <baseline>
-'aac' does not use a baseline reduction so the baseline 
-graph stays the same as before.
+The baseline graphs does not change since aac does not use baseline reduction.
 
                                 <loss_e> 
-In terms of absolute value, 'aac' has both a lower entropy 
-loss and lowers faster than the entropy loss of 'epg' and 'cpg', making it 
-clearly the better choice here. 
+aac has a lower entropy loss and diminishes faster than the entropy loss of epg and cpg in absolute value,
+and so we would prefer to use aac.
 
                                 <mean_reward>
-Here too, 'aac' clearly outperforms all other methods as 
-it reaches a mean_reward of around ~$130$. Although in the first ~$1000$ 
-episodes 'aac' performed worse and even decreased, starting from the $1000$ 
-episode it rose a lot faster than all other methods, reaching a higher 
-mean_reward than all others in episode ~1200. 
-TODO: CHANGEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+aac yields better results in the mean reward as well, as we can see that it reaches 130.
+Although in the first ~1k episodes aac performed worse and even decreased, in episodes post 1k
+It outperformed all other methods substantially, ending up by episode
+1200 with a much higher mean reward than the other candidates.
 """
 
 # ==============

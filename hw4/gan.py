@@ -9,8 +9,9 @@ from torch.optim.optimizer import Optimizer
 
 # ====== YOUR CODE: ======
 # TODO: Play with params
-def create_layer(m, conv, in_c, out_c, relu=True, batchnorm=True, not_leaky=False, relu_param=0.3, kernel_size=4,
-        padding=1, stride=2, bias=False):
+def create_layer(m, conv, in_c, out_c, relu=True, batchnorm=True,
+                 not_leaky=False, relu_param=0.3, kernel_size=4,
+                 padding=1, stride=2, bias=False):
     m.append(conv(
         in_c,
         out_c,
@@ -49,7 +50,7 @@ class Discriminator(nn.Module):
         create_layer(modules, nn.Conv2d, 128, 256)
         create_layer(modules, nn.Conv2d, 256, 512)
         create_layer(modules, nn.Conv2d, 512, 1024)
-        self.lin = nn.Sequential(*modules)
+        self.seq = nn.Sequential(*modules)
         # ========================
 
     def forward(self, x):
@@ -61,7 +62,9 @@ class Discriminator(nn.Module):
         #  No need to apply sigmoid to obtain probability - we'll combine it
         #  with the loss due to improved numerical stability.
         # ====== YOUR CODE: ======
-        y = self.lin(nn.Linear(self.in_size[1] * self.in_size[2] * 4, 1)(x).view(x.shape[0], -1))
+        lin = nn.Linear(self.in_size[1] * self.in_size[2] * 4, 1)
+        t = self.seq(x)
+        y = lin(t.view(x.shape[0], -1))
         # =======================
         return y
 
@@ -82,7 +85,7 @@ class Generator(nn.Module):
         #  You can assume a fixed image size.
         # ====== YOUR CODE: ======
         modules = []
-        create_layer(modules, nn.ConvTranspose2d, z_dim, 1024, not_leaky=True, kernel_size=featuremap_size)
+        create_layer(modules, nn.ConvTranspose2d, z_dim, 1024, not_leaky=True, kernel_size=featuremap_size, padding=0)
         create_layer(modules, nn.ConvTranspose2d, 1024, 512, not_leaky=True)
         create_layer(modules, nn.ConvTranspose2d, 512, 256, not_leaky=True)
         create_layer(modules, nn.ConvTranspose2d, 256, 128, not_leaky=True)

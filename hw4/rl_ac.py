@@ -24,18 +24,20 @@ class AACPolicyNet(nn.Module):
 
         layers2 = (128, 64)
         nns2 = (nn.ReLU(), nn.ReLU())
+        try:
+            if kw[layers1]:
+                layers1 = kw[layers1]
 
-        if kw[layers1]:
-            layers1 = kw[layers1]
+            if kw[nns1]:
+                nns1 = kw[nns1]
 
-        if kw[nns1]:
-            nns1 = kw[nns1]
+            if kw[layers2]:
+                layers2 = kw[layers2]
 
-        if kw[layers2]:
-            layers2 = kw[layers2]
-
-        if kw[nns2]:
-            nns2 = kw[nns2]
+            if kw[nns2]:
+                nns2 = kw[nns2]
+        except:
+            pass
 
         linear_layers1 = (nn.Linear(in_features, layers1[0]), nn.Linear(layers1[0], layers1[1]),
                          nn.Linear(layers1[1], out_actions))

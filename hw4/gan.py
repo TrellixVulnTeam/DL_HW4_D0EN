@@ -49,6 +49,7 @@ class Discriminator(nn.Module):
         create_layer(modules, nn.Conv2d, 128, 256)
         create_layer(modules, nn.Conv2d, 256, 512)
         create_layer(modules, nn.Conv2d, 512, 1024)
+        self.seq = nn.Sequential(*modules)
         # ========================
 
     def forward(self, x):
@@ -60,7 +61,7 @@ class Discriminator(nn.Module):
         #  No need to apply sigmoid to obtain probability - we'll combine it
         #  with the loss due to improved numerical stability.
         # ====== YOUR CODE: ======
-        y = self.reg(self.disc(x).view(x.shape[0], -1))
+        y = self.lin(nn.Linear(self.in_size[1] * self.in_size[2] * 4, 1)(x).view(x.shape[0], -1))
         # =======================
         return y
 

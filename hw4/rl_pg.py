@@ -446,10 +446,9 @@ class PolicyTrainer(object):
         #   - Update model parameters.
         # ====== YOUR CODE: ======
         self.optimizer.zero_grad()
-        idx = 0
 
-        while idx < len(self.loss_functions):
-            loss, loss_dict = self.loss_functions[idx](batch, self.model(batch.states))
+        for lf in self.loss_functions:
+            loss, loss_dict = lf(batch, self.model(batch.states))
             losses_dict.update(loss_dict)
             total_loss = total_loss + loss
 

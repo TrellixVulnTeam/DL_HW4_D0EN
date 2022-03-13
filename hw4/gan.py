@@ -44,6 +44,7 @@ class Discriminator(nn.Module):
         #  You can then use either an affine layer or another conv layer to
         #  flatten the features.
         # ====== YOUR CODE: ======
+        modules = []
         create_layer(modules, nn.Conv2d, in_size[0], 128)
         create_layer(modules, nn.Conv2d, 128, 256)
         create_layer(modules, nn.Conv2d, 256, 512)
@@ -59,8 +60,8 @@ class Discriminator(nn.Module):
         #  No need to apply sigmoid to obtain probability - we'll combine it
         #  with the loss due to improved numerical stability.
         # ====== YOUR CODE: ======
-        f = self.disc(x)
-        # ========================
+        y = self.reg(self.disc(x).view(x.shape[0], -1))
+        # =======================
         return y
 
 

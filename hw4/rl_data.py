@@ -174,7 +174,7 @@ class TrainBatchDataset(torch.utils.data.IterableDataset):
             while not experience.is_done:
                 experience = agent.step()
                 episode_reward = episode_reward + experience.reward
-                episode_experiences = episode_experiences + experience
+                episode_experiences = episode_experiences + [experience]
 
             episode = Episode(episode_reward, episode_experiences)
             curr_batch.append(episode)

@@ -38,15 +38,21 @@ class Episode(object):
         #  Try to implement it in O(n) runtime, where n is the number of
         #  states. Hint: change the order.
         # ====== YOUR CODE: ======
+
+
+        # qval = 0
+        #
+        # for exp in self.experiences:
+        #     qval = exp.reward + (qval * gamma)
+        #     qvals.append(qval)
+        #
+        # # list reverse: O(1) if changing of a bit, worst case O(n)
+        # qvals.reverse()
+
         qval = 0
-
-        for exp in self.experiences:
-            qval = exp.reward + (qval * gamma)
-            qvals.append(qval)
-
-        # list reverse: O(1) if changing of a bit, worst case O(n)
-        qvals.reverse()
-
+        for exper in reversed(self.experiences):
+            qval = exper.reward + (qval * gamma)
+            qvals.insert(0, qval)
         # ========================
         return qvals
 

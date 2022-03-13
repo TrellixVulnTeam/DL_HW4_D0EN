@@ -31,11 +31,14 @@ class PolicyNet(nn.Module):
         layers = (256, 128)
         nns = (nn.ReLU(), nn.ReLU())
 
-        if kw[layers]:
-            layers = kw[layers]
+        try:
+            if kw[layers]:
+                layers = kw[layers]
 
-        if kw[nns]:
-            nns = kw[nns]
+            if kw[nns]:
+                nns = kw[nns]
+        except:
+            pass
 
         linear_layers = (nn.Linear(in_features, layers[0]), nn.Linear(layers[0], layers[1]),
                          nn.Linear(layers[1], out_actions))

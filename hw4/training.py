@@ -78,14 +78,20 @@ class Trainer(abc.ABC):
                 verbose = True
             self._print(f"--- EPOCH {epoch+1}/{num_epochs} ---", verbose)
 
-            # TODO: Train & evaluate for one epoch
+            # Train & evaluate for one epoch
             #  - Use the train/test_epoch methods.
             #  - Save losses and accuracies in the lists above.
             # ====== YOUR CODE: ======
-            raise NotImplementedError()
+            kw['verbose'] = verbose
+            train_result = self.train_epoch(dl_train, **kw)
+            train_loss.append(sum(train_result.losses) / len(train_result.losses))
+            train_acc.append(train_result.accuracy)
+
+            test_result = self.test_epoch(dl_test, **kw)
+            test_loss.append(sum(test_result.losses) / len(test_result.losses))
+            test_acc.append(test_result.accuracy)
             # ========================
 
-            # TODO:
             #  - Optional: Implement early stopping. This is a very useful and
             #    simple regularization technique that is highly recommended.
             #  - Optional: Implement checkpoints. You can use the save_checkpoint
@@ -93,11 +99,16 @@ class Trainer(abc.ABC):
             #    the checkpoints argument.
             if best_acc is None or test_result.accuracy > best_acc:
                 # ====== YOUR CODE: ======
-                raise NotImplementedError()
+                epochs_without_improvement = 0
+                best_acc = test_result.accuracy
+                if checkpoints:
+                    self.save_checkpoint(checkpoints)
                 # ========================
             else:
                 # ====== YOUR CODE: ======
-                raise NotImplementedError()
+                epochs_without_improvement += 1
+                if early_stopping and epochs_without_improvement > early_stopping:
+                    break
                 # ========================
 
             if post_epoch_fn:

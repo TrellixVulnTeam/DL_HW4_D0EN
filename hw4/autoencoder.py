@@ -58,10 +58,10 @@ class DecoderCNN(nn.Module):
         #  output should be a batch of images, with same dimensions as the
         #  inputs to the Encoder were.
         # ====== YOUR CODE: ======
-        create_layer(modules, ConvTranspose2d, in_channels, 256)
-        create_layer(modules, ConvTranspose2d, 256, 128)
-        create_layer(modules, ConvTranspose2d, 128, 32)
-        create_layer(modules, ConvTranspose2d, 32, out_channels, without_relu=True)
+        create_layer(modules, nn.ConvTranspose2d, in_channels, 256)
+        create_layer(modules, nn.ConvTranspose2d, 256, 128)
+        create_layer(modules, nn.ConvTranspose2d, 128, 32)
+        create_layer(modules, nn.ConvTranspose2d, 32, out_channels, without_relu=True)
         # ========================
         self.cnn = nn.Sequential(*modules)
 

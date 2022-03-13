@@ -169,7 +169,7 @@ class TrainBatchDataset(torch.utils.data.IterableDataset):
             # ====== YOUR CODE: ======
             experience = agent.step()
             episode_reward = experience.reward
-            episode_experiences += experience
+            episode_experiences = [experience]
 
             while not experience.is_done:
                 experience = agent.step()

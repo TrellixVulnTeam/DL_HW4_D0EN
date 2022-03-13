@@ -100,34 +100,20 @@ class TrainBatch(object):
         #   - Calculate the q-values for states in each experience.
         #   - Construct a TrainBatch instance.
         # ====== YOUR CODE: ======
-        # rewards, actions, states, qvals = [], [], [], []
-        #
-        # for episode in episodes:
-        #     rewards += [episode.total_reward]
-        #     qvals += [episode.calc_qvals(gamma)]
-        #
-        #     for experiences in episode.experiences:
-        #         states += [experiences.state]
-        #         actions += [experiences.action]
-        #
-        # train_batch = TrainBatch(torch.stack(states),
-        #                          torch.LongTensor(actions),
-        #                          torch.FloatTensor(qvals),
-        #                          torch.FloatTensor(rewards))
+        rewards, actions, states, qvals = [], [], [], []
 
-        rewards = list()
-        actions = list()
-        states = list()
-        qvals = list()
+        for episode in episodes:
+            rewards += [episode.total_reward]
+            qvals.extend(episode.calc_qvals(gamma))
 
-        for epi in episodes:
-            rewards.append(epi.total_reward)
-            qvals.extend(epi.calc_qvals(gamma))
-            for experiences in epi.experiences:
-                actions.append(experiences.action)
-                states.append(experiences.state)
-        train_batch = TrainBatch(torch.stack(states), torch.LongTensor(
-            actions), torch.FloatTensor(qvals), torch.FloatTensor(rewards))
+            for experiences in episode.experiences:
+                states += [experiences.state]
+                actions += [experiences.action]
+
+        train_batch = TrainBatch(torch.stack(states),
+                                 torch.LongTensor(actions),
+                                 torch.FloatTensor(qvals),
+                                 torch.FloatTensor(rewards))
         # ========================
         return train_batch
 

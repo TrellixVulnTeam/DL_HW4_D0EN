@@ -49,7 +49,7 @@ class Discriminator(nn.Module):
         create_layer(modules, nn.Conv2d, 128, 256)
         create_layer(modules, nn.Conv2d, 256, 512)
         create_layer(modules, nn.Conv2d, 512, 1024)
-        self.seq = nn.Sequential(*modules)
+        self.lin = nn.Sequential(*modules)
         # ========================
 
     def forward(self, x):

@@ -45,7 +45,7 @@ class Episode(object):
             qvals.append(qval)
 
         # list reverse: O(1) if changing of a bit, worst case O(n)
-        qvals = qvals.reverse()
+        qvals.reverse()
 
         # ========================
         return qvals

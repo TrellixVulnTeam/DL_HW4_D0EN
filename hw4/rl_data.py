@@ -103,12 +103,12 @@ class TrainBatch(object):
         rewards, actions, states, qvals = [], [], [], []
 
         for episode in episodes:
-            qvals += episode.calc_qvals(gamma)
-            rewards += episode.total_reward
+            qvals += [episode.calc_qvals(gamma)]
+            rewards += [episode.total_reward]
 
             for experiences in episode.experiences:
-                states += experiences.state
-                actions += experiences.action
+                states += [experiences.state]
+                actions += [experiences.action]
 
         train_batch = TrainBatch(torch.stack(states),
                                  torch.LongTensor(actions),
